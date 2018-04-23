@@ -24,7 +24,7 @@ class ParserTest extends TestCase
 
     public function testItParsesSpecifications(): void
     {
-        $specification = $this->parser->parse('stubs/petstore.yml');
+        $specification = $this->parser->parse(__DIR__ . '/stubs/petstore.yml');
 
         self::assertInstanceOf(Specification::class, $specification);
         self::assertSame('3.0.1', $specification->version());
@@ -33,7 +33,7 @@ class ParserTest extends TestCase
 
     public function testItParsesSpecificationInfo(): void
     {
-        $specification = $this->parser->parse('stubs/petstore.yml');
+        $specification = $this->parser->parse(__DIR__ . '/stubs/petstore.yml');
 
         $info = $specification->info();
 
