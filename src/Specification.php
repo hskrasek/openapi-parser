@@ -16,10 +16,16 @@ class Specification
      */
     private $info;
 
-    public function __construct(string $version, Info $info)
+    /**
+     * @var array
+     */
+    private $servers;
+
+    public function __construct(string $version, Info $info, array $servers)
     {
         $this->version = $version;
         $this->info = $info;
+        $this->servers = $servers;
     }
 
     public function version(): string
@@ -30,5 +36,10 @@ class Specification
     public function info(): Info
     {
         return $this->info;
+    }
+
+    public function servers(): array
+    {
+        return $this->servers;
     }
 }

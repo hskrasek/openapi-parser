@@ -4,6 +4,7 @@ namespace HSkrasek\OpenAPI;
 
 use HSkrasek\OpenAPI\Loader\YAMLLoader;
 use HSkrasek\OpenAPI\Parser\InfoParser;
+use HSkrasek\OpenAPI\Parser\ServersParser;
 
 class Parser
 {
@@ -25,13 +26,14 @@ class Parser
             $data[$key] = $parser($data[$key] ?? null);
         }
 
-        return new Specification($data['openapi'], $data['info']);
+        return new Specification($data['openapi'], $data['info'], $data['servers']);
     }
 
     private function defaultParsers(): array
     {
         return [
             'info' => new InfoParser,
+            'servers' => new ServersParser,
         ];
     }
 }
