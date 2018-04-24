@@ -21,12 +21,8 @@ class Parser
     {
         $data = (new YAMLLoader)->load($specPath);
 
-        foreach ($data as $key => $datum) {
-            if (!array_key_exists($key, $this->parsers)) {
-                continue;
-            }
-
-            $data[$key] = $this->parsers[$key]($datum);
+        foreach ($this->parsers as $key => $parser) {
+            $data[$key] = $parser($data[$key] ?? null);
         }
 
         return new Specification($data['openapi'], $data['info']);
@@ -35,9 +31,6 @@ class Parser
     private function defaultParsers(): array
     {
         return [
-            'openapi' => function (string $data) {
-                return $data;
-            },
             'info' => new InfoParser,
         ];
     }
