@@ -29,6 +29,7 @@ class ParserTest extends TestCase
         self::assertInstanceOf(Specification::class, $specification);
         self::assertSame('3.0.1', $specification->version());
         self::assertInstanceOf(Specification\Info::class, $specification->info());
+        self::assertInternalType('array', $specification->servers());
     }
 
     public function testItParsesSpecificationInfo(): void
@@ -51,5 +52,18 @@ class ParserTest extends TestCase
         self::assertNull($info->contact()->name());
         self::assertNull($info->contact()->url());
         self::assertNull($info->contact()->email());
+    }
+
+    public function testItParsesSpecificationServers(): void
+    {
+        $specification = $this->parser->parse(__DIR__ . '/stubs/petstore.yml');
+
+        $servers = $specification->servers();
+        $server = $servers[0];
+
+        self::assertInternalType('array', $servers);
+        self::assertInstanceOf(Specification\Server::class, $server);
+        self::assertSame('http://petstore.swagger.io/v1', $server->url());
+        self::assertNull($server->description());
     }
 }
